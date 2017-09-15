@@ -7,11 +7,26 @@ const ALLOWED_DELAY = 8 # Seconds
 var color
 var playerMaterial
 
+var mousepoint = Vector2(0,0)
+var player_vector = Vector2(0,0)
+const MOTION_SPEED = 4600 # Pixels/second
+
+var type
+
 func _ready():
 	set_fixed_process(true)
+	type = OS.get_name()
 	DontGlow()
 
 func _fixed_process(delta):
+	if type == "Windows":
+		mousepoint = get_global_mouse_pos()
+		if(get_pos().distance_to(mousepoint) <= 5.0):
+			player_vector = Vector2(0,0)
+		else:
+			player_vector = (mousepoint - get_pos()).normalized()
+		player_vector = player_vector * MOTION_SPEED * delta
+		set_linear_velocity(player_vector)
 
 	var movX = Input.get_accelerometer().x
 	if movX>0:
