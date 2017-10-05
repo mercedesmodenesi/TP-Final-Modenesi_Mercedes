@@ -13,7 +13,7 @@ func _ready():
 		get_node("Area2D").show()
 	if holeType == "OTRO":
 		get_node("Sprite").hide()
-		get_node("Area2D").show()
+		get_node("Area2D").hide()
 	
 	if !(get_tree().is_editor_hint()):
 		if holeType == "HOLE":
@@ -21,8 +21,9 @@ func _ready():
 			get_node("Area2D").show()
 		elif holeType == "OTRO":
 			get_node("Sprite").hide()
-			get_node("Area2D").show()
+			get_node("Area2D").hide()
 
 func _on_Area2D_body_enter( body ):
-	if get_node("/root/Global").glowing == false:
-		get_tree().reload_current_scene()
+	if holeType == "HOLE":
+		if get_node("/root/Global").glowing == false:
+			get_tree().reload_current_scene()
